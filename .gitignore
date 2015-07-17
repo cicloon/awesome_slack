@@ -2,5 +2,6 @@ node_modules
 .tmp
 dump.rdb
 *.log
+*tgz
 .env
 tmp/
