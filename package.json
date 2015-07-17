@@ -1,0 +1,24 @@
+{
+  "name": "awesome_slack",
+  "version": "0.0.1",
+  "description": "Slack RTM Client",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "slack",
+    "api",
+    "real",
+    "time"
+  ],
+  "author": "cicloon",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "~3.10.0",
+    "q": "~1.4.1",
+    "Qx": "~1.0.0",
+    "request": "2.58.0",
+    "ws": "^0.7.2"
+  }
+}
