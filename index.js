@@ -23,22 +23,26 @@ class SlackRTMClient{
 
   startSocketConnection(cb){
     let deferred = Q.defer();
-    this._startRTM().then( function(data){
+    if (this.socket == null || this.socket.readyState != this.socket.OPEN){
+      this._startRTM().then( function(data){
 
-      let err = data.err;
-      let response = data.response;
-      let body = data.body;
+        let err = data.err;
+        let response = data.response;
+        let body = data.body;
 
-      if(cb){ cb(err, response, body);}
-      if(err !== null){
-        deferred.reject(new Error(err));
-      } else{
-        this.channels = body.channels;
-        this.groups = body.groups;
-        this._setSocketConnection(body.url);
-        deferred.resolve(err, response, body);
-      }
-    }.bind(this) )
+        if(cb){ cb(err, response, body);}
+        if(err !== null){
+          deferred.reject(new Error(err));
+        } else{
+          this.channels = body.channels;
+          this.groups = body.groups;
+          this._setSocketConnection(body.url);
+          deferred.resolve(err, response, body);
+        }
+      }.bind(this) )
+    } else{
+      process.nextTick( function(){ deferred.resolve(null, {}, {}) }.bind(this) )
+    }
 
     return deferred.promise;
   }
