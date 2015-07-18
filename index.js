@@ -52,7 +52,6 @@ class SlackRTMClient{
   }
 
   _onMessage(data, flags){
-    console.log('message received');
     if( typeof this.options['onMessage'] != "undefined"){
       this.options['onMessage'](data);
     }
@@ -66,18 +65,9 @@ class SlackRTMClient{
   _performHttpRequest(apiCall, method, params, cb){
     let deferred = Q.defer();
     let apiCallUrl = url.parse(`${this.baseUrl}/${apiCall}`);
-    console.log(`performing http request to ${apiCallUrl}`);
+
     Request( { json:true, url:  apiCallUrl, qs: _.extend({ "token": this.apiToken }, params)},
       function(error, response, body){
-
-        console.log("request resolved")
-        console.log(error != null)
-        console.log(response != null)
-        console.log(body != null)
-
-        // console.log(error);
-        // console.log(response);
-        // console.log(body);
 
         let err = null;
         if(error){ err = {error: 'There was an error performing the request'}; }
@@ -91,7 +81,6 @@ class SlackRTMClient{
           deferred.reject(new Error(err));
         } else {
           console.log("resolve promise")
-          console.log(response);
           deferred.resolve({err: err, response: response, body: body});
         }
       }.bind(this)
