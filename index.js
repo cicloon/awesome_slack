@@ -4,12 +4,15 @@ let Q        = require('q'),
     Request  = require('request'),
     _        = require('lodash'),
     url      = require('url'),
-    WebSocket = require('ws');
+    WebSocket = require('ws'),
+    EventEmitter = require('events'),
+    util = require('util');
 
 
-class SlackRTMClient{
+class SlackRTMClient extends EventEmitter{
 
   constructor(apiToken, options){
+    super();
     this.options = _.extend({}, options);
     this.apiToken = apiToken;
     this.baseUrl = "https://slack.com/api";
@@ -52,9 +55,7 @@ class SlackRTMClient{
   }
 
   _onMessage(data, flags){
-    if( typeof this.options['onMessage'] != "undefined"){
-      this.options['onMessage'](data);
-    }
+    this.emit('messageReceived', data);
   }
 
   _startRTM(){
@@ -124,6 +125,7 @@ class SlackRTMClient{
 
   _onConnectionOpen(){
     console.log('socket open');
+    this.emit('connectionOpen');
     _.each( this.enqueuedSends, function(data){
       let sendFunction = _.bind(this._sendToSlack,this, data);
       process.nextTick(sendFunction);
@@ -133,6 +135,7 @@ class SlackRTMClient{
 
   _onConnectionClose(){
     console.log('socket closed');
+    this.emit('connectionClosed');
     this.messageCounter = 0;
   };
 }
