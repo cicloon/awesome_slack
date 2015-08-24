@@ -39,6 +39,7 @@ class SlackRTMClient extends EventEmitter{
         } else{
           this.channels = body.channels;
           this.groups = body.groups;
+          this.users = body.users;
           this._setSocketConnection(body.url);
           deferred.resolve(err, response, body);
         }
