@@ -82,7 +82,6 @@ class SlackRTMClient extends EventEmitter{
         if( err !== null ) {
           deferred.reject(new Error(err));
         } else {
-          console.log("resolve promise")
           deferred.resolve({err: err, response: response, body: body});
         }
       }.bind(this)
@@ -93,11 +92,8 @@ class SlackRTMClient extends EventEmitter{
 
   _sendToSlack(data){
     let send = function(){
-      console.log('sending data through socket');
-      console.log(data);
       this.messageCounter++;
       let res = this.socket.send( JSON.stringify(data) );
-      console.log('data sent');
     }.bind(this);
 
     if (this.socket == null || this.socket.readyState != this.socket.OPEN ){
@@ -125,7 +121,6 @@ class SlackRTMClient extends EventEmitter{
   }
 
   _onConnectionOpen(){
-    console.log('socket open');
     this.emit('connectionOpen');
     _.each( this.enqueuedSends, function(data){
       let sendFunction = _.bind(this._sendToSlack,this, data);
@@ -135,7 +130,6 @@ class SlackRTMClient extends EventEmitter{
   };
 
   _onConnectionClose(){
-    console.log('socket closed');
     this.emit('connectionClosed');
     this.messageCounter = 0;
   };
