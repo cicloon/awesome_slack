@@ -73,7 +73,7 @@ class SlackRTMClient extends EventEmitter{
 
         let err = null;
         if(error){ err = {error: 'There was an error performing the request'}; }
-        if (body['ok'] == false){ err = {error: body['error']}  };
+        if ( typeof body === "undefined" || body['ok'] == false){ err = {error: "Error performing http request" }  };
 
         // if a callback is provided, call it
         if( cb ){cb(err, response, body);}
