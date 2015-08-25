@@ -1,6 +1,6 @@
 {
   "name": "awesome_slack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Slack RTM Client",
   "main": "index.js",
   "scripts": {
