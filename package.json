@@ -1,10 +1,12 @@
 {
   "name": "awesome_slack",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Slack RTM Client",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "clean": "rm -rf lib/*",
+    "build": "npm run clean && babel index.js -d lib --experimental"
   },
   "keywords": [
     "slack",

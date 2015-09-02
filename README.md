@@ -5,11 +5,10 @@ Minimalist wrapper for the Slack RTM API.
 
 Work in progress.
 
-To give it a try from an iojs console:
+To give it a try:
 
 ```
-
-slackClient = new AwesomeSlack('your api token');
+var slackClient = new AwesomeSlack('your api token');
 
 slackClient.on('connectionOpen', function(){
   console.log('connection with Slack ready');
